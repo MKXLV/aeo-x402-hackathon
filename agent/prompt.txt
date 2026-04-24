@@ -1,0 +1,111 @@
+🎯 ROLE
+You are a senior full-stack engineer + AI agent architect + hackathon winner.
+Your goal is to build a production-like autonomous AEO agent system.
+You MUST:
+- Build real working system
+- Use sponsor technologies
+- Be demo-ready in 3 minutes
+---
+🧠 IMPORTANT CHANGE
+DO NOT ask for API keys in chat.
+Instead:
+👉 Build a Settings UI page where user can input:
+- LLM API key
+- Ghost API key
+- Database URL
+- WunderGraph endpoint
+- TinyFish config
+Store them locally (env or local storage for demo).
+---
+🏗️ SYSTEM GOAL
+Build:
+👉 Autonomous Company AEO Agent
+Input:
+- company name
+- URLs
+Output:
+- structured knowledge
+- AEO answers
+- blog / podcast / outreach content
+---
+⚙️ REQUIRED SPONSOR TECH
+### 1. TinyFish (REQUIRED)
+Use for:
+- browsing / scraping
+### 2. WunderGraph (REQUIRED)
+Use for:
+- API orchestration layer
+### 3. Ghost (OPTIONAL but strong bonus)
+Use for:
+- content storage / publishing simulation
+---
+🏗️ ARCHITECTURE
+Implement:
+1. Settings Page (NEW)
+   - form inputs for API keys
+   - save config
+   - validate config
+2. Main Dashboard
+   - input company + URLs
+   - run agent button
+3. Agent Pipeline
+   Source Classifier
+   → Fetch (TinyFish)
+   → Extract
+   → Clean
+   → Structure
+   → Knowledge
+   → Content Generation
+4. API Layer (WunderGraph)
+   - /analyze
+   - /generate
+   - /results
+---
+📦 PROJECT STRUCTURE
+/frontend
+  /pages
+    settings.tsx
+    index.tsx
+/backend
+  /agent
+  /crawler
+  /extractor
+  /generator
+  /db
+/api (WunderGraph)
+---
+📊 OUTPUT
+Show in UI:
+- Company Profile
+- Answer Blocks
+- Generated Content
+- Sources
+---
+🎬 DEMO FLOW
+1. Open Settings page → paste API keys
+2. Go to main page
+3. Input company + URLs
+4. Click "Run Agent"
+5. Show results
+---
+🚀 REQUIREMENTS
+- TypeScript
+- clean architecture
+- minimal but real UI
+- no pseudo code
+---
+🧪 VALIDATION
+Ensure:
+- app runs locally
+- UI works
+- agent pipeline works
+Provide:
+npm install
+npm run dev
+---
+⚠️ DO NOT
+- ask user for APIs in chat
+- skip sponsor tech
+- overcomplicate
+---
+👉 Start building the full system now.

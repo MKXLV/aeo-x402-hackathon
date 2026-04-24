@@ -1,0 +1,20 @@
+# Maps (upstream, platform, kind) -> numeric service ID on that panel.
+# Refresh by calling `action=services` against each upstream and matching by name.
+# These IDs are placeholders — replace with real IDs from justanotherpanel.com/services
+# and peakerr.com/services before production use.
+jap:
+  reddit:
+    upvote: 1848       # "Reddit Upvotes [Real]"
+    comment: 3091      # "Reddit Custom Comments"
+  twitter:
+    like: 4372         # "Twitter Likes [Real]"
+    retweet: 4373      # "Twitter Retweets"
+    comment: 4384      # "Twitter Custom Replies"
+peakerr:
+  reddit:
+    upvote: 2001
+    comment: 2005
+  twitter:
+    like: 3101
+    retweet: 3102
+    comment: 3110

@@ -1,0 +1,23 @@
+{
+  "posts": [
+    {
+      "platform": "reddit",
+      "kind": "upvote",
+      "body": "ignored for upvotes",
+      "topics": ["aeo", "claude"],
+      "target": { "in_reply_to": "https://www.reddit.com/r/webdev/comments/abc123/example_post/" },
+      "provider_preference": "smm",
+      "quantity": 25
+    },
+    {
+      "platform": "twitter",
+      "kind": "post",
+      "body": "Finished tweet copy here. The caller supplies finished copy — topics are just metadata.",
+      "topics": ["aeo", "answer-engine-optimization"],
+      "target": { "handle": "claude" },
+      "provider_preference": "ugc"
+    }
+  ],
+  "callback_url": "https://webhook.site/your-unique-id",
+  "metadata": { "caller": "agentic-market-agent-xyz" }
+}
