@@ -41,7 +41,7 @@ export default function UgcPanel({ job }: { job: AnalysisJob }) {
       const res = await fetch("/api/ugc", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ jobId: job.id }),
+        body: JSON.stringify({ jobId: job.id, job }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
