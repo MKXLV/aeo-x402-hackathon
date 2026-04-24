@@ -3,7 +3,7 @@ import type { AgentConfig } from "./types";
 /**
  * Settings flow:
  *   1. User saves config via /settings page → localStorage
- *   2. Client attaches `x-aeo-config: <json>` header to each API call
+ *   2. Client attaches `x-aeo-config: <base64 json>` header to each API call
  *   3. This helper merges that header with server-side env fallbacks
  */
 export function readConfigFromHeaders(headers: Headers): AgentConfig {
@@ -11,8 +11,6 @@ export function readConfigFromHeaders(headers: Headers): AgentConfig {
   const raw = headers.get("x-aeo-config");
   if (!raw) return fallback;
   try {
-    // Supports both raw JSON and base64-encoded JSON. The client now sends
-    // base64 to avoid "TypeError: Invalid value" on non-ASCII header chars.
     let jsonText = raw;
     if (!raw.trim().startsWith("{")) {
       jsonText = Buffer.from(raw, "base64").toString("utf-8");
@@ -30,7 +28,6 @@ export function encodeConfigHeader(config: AgentConfig): string {
   if (typeof window === "undefined") {
     return Buffer.from(json, "utf-8").toString("base64");
   }
-  // Browser-safe UTF-8 → base64 (handles non-ASCII characters).
   return btoa(unescape(encodeURIComponent(json)));
 }
 
@@ -68,8 +65,22 @@ function stripEmpty<T extends Record<string, unknown>>(obj: T): Partial<T> {
   const out: Partial<T> = {};
   for (const [k, v] of Object.entries(obj)) {
     if (v === undefined || v === null) continue;
-    if (typeof v === "string" && v.trim() === "") continue;
-    (out as Record<string, unknown>)[k] = v;
+    if (typeof v === "string") {
+      const cleaned = sanitizeHeaderValue(v);
+      if (cleaned.trim() === "") continue;
+      (out as Record<string, unknown>)[k] = cleaned;
+    } else {
+      (out as Record<string, unknown>)[k] = v;
+    }
   }
   return out;
+}
+
+/**
+ * Strips non-ASCII characters that HTTP headers can't carry. Copy-paste of
+ * API keys inserts U+2028 / U+00A0 / zero-width chars which crash fetch()
+ * with "Cannot convert argument to a ByteString…".
+ */
+function sanitizeHeaderValue(s: string): string {
+  return s.replace(/[^\x20-\x7E]/g, "").trim();
 }
