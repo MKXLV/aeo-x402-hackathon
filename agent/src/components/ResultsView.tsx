@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import type { AnalysisJob, AnswerBlock, StructuredSource } from "@/lib/types";
 import UgcPanel from "./UgcPanel";
+import MediaResearchPanel from "./MediaResearchPanel";
 
 export default function ResultsView({ job }: { job: AnalysisJob }) {
   return (
@@ -37,6 +38,8 @@ export default function ResultsView({ job }: { job: AnalysisJob }) {
       </section>
 
       <UgcPanel job={job} />
+
+      <MediaResearchPanel job={job} />
 
       <section className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
         <div className="space-y-6">

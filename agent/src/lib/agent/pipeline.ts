@@ -30,6 +30,17 @@ export interface RunInput {
  *   structure (LLM) → knowledge (LLM) → generate (LLM) → [Ghost publish]
  */
 export async function runPipeline(input: RunInput): Promise<AnalysisJob> {
+  const { done } = startPipeline(input);
+  return done;
+}
+
+/** Start the pipeline synchronously; returns the job id immediately and a
+ *  promise that resolves when the run finishes (either status=complete or
+ *  status=error). Callers can poll `jobStore.get(jobId)` for live state. */
+export function startPipeline(input: RunInput): {
+  jobId: string;
+  done: Promise<AnalysisJob>;
+} {
   const id = crypto.randomUUID();
   const job: AnalysisJob = {
     id,
@@ -43,6 +54,11 @@ export async function runPipeline(input: RunInput): Promise<AnalysisJob> {
   };
   jobStore.create(job);
 
+  const done = runAsync(id, input);
+  return { jobId: id, done };
+}
+
+async function runAsync(id: string, input: RunInput): Promise<AnalysisJob> {
   try {
     // 1. Classify
     const classified = input.urls.map((url) => ({ url, source: classifyUrl(url) }));
